@@ -1,5 +1,6 @@
 package com.it.unimol.atenei.org;
 
+import com.it.unimol.atenei.MainAteneo;
 import com.it.unimol.atenei.people.Docente;
 import com.it.unimol.atenei.people.Studente;
 
