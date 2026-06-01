@@ -28,16 +28,16 @@ public class CatalogoLibri {
         this.getCatalogo().forEach(libro -> System.out.println(libro.toString()));
     }
 
-    public List<Autore> ricerca(String name, String surname) {
-        List<Autore> autoriTrovati = new ArrayList<>();
+    public ArrayList<Libro> ricerca(String name, String surname) {
+        ArrayList<Libro> libriTrovati = new ArrayList<>();
         getCatalogo().forEach(libro -> {
             libro.getAutori().forEach(autore -> {
                 if (name.equals(autore.getName()) || surname.equals(autore.getSurname())) {
-                    autoriTrovati.add(autore);
+                    libriTrovati.addAll(autore.getLibri());
                 }
             });
         });
-        if (autoriTrovati.isEmpty()) return Collections.emptyList();
-        return autoriTrovati;
+        if (libriTrovati.isEmpty()) return new ArrayList<>(Collections.emptyList());
+        return libriTrovati;
     }
 }

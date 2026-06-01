@@ -31,6 +31,18 @@ public class Autore {
         this.surname = surname;
     }
 
+    public List<Libro> getLibri() {
+        return libri;
+    }
+
+    public void setLibri(List<Libro> libri) {
+        this.libri = libri;
+    }
+
+    public void setLibro(Libro libro) {
+        this.libri.add(libro);
+    }
+
     @Override
     public String toString() {
         return "Autore: " + this.name + " " + this.surname;

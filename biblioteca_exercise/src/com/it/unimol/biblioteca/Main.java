@@ -28,6 +28,7 @@ Il jar sarà eseguibile con il comando
 java -jar biblioteca.jar
 */
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 //•La classe com.it.unimol.biblioteca.Main, infine, che mostra un menu che permetta di:
@@ -37,33 +38,61 @@ import java.util.Scanner;
 // uscire
 public class Main {
     public static void main(String[] args) {
+        CatalogoLibri catalogoLibri = new CatalogoLibri();
         while(true) {
             System.out.println("Fai una scelta: ");
             System.out.println("1. Stampare il catalogo");
             System.out.println("2. Inserire un libro");
             System.out.println("3. Ricerca per nome e cognome autore");
             System.out.println("0. Esci");
-
             Scanner scanner = new Scanner(System.in);
-            int choice = scanner.nextInt();
+            Integer choice = Integer.parseInt(scanner.nextLine());
+
             switch (choice) {
                 case 0:
                     System.out.println("Arrivederci e grazie.");
                     System.exit(0);
                 case 1:
-                    System.out.println("");
+                    catalogoLibri.stampaCatalogo();
                     break;
                 case 2:
                     System.out.println("Inserisci titolo: ");
                     String titolo = scanner.nextLine();
                     System.out.println("Inserisci prezzo: ");
-                    Float prezzo = scanner.nextFloat();
+                    Float prezzo = Float.parseFloat(scanner.nextLine());
                     System.out.println("Inserisci casa editrice: ");
                     String ce = scanner.nextLine();
-                    Libro libro = new Libro(0, titolo, prezzo, new CasaEditrice(ce), Collections.emptyList());
+                    System.out.println("Quanti autori ha il libro?");
+                    Integer nAutori = Integer.parseInt(scanner.nextLine());
+                    ArrayList<Autore> autori = new ArrayList<>();
+                    for (int i = 0; i < nAutori; i++) {
+                        System.out.println("Inseriamo autori: " + nAutori);
+                        System.out.println("Nome Autore: ");
+                        String nomeAutore = scanner.nextLine();
+                        System.out.println("Cognome Autore: ");
+                        String cognomeAutore = scanner.nextLine();
+                        Autore autore = new Autore(nomeAutore, cognomeAutore);
+                        autori.add(autore);
+                    }
+
+                    Libro libro = new Libro(catalogoLibri.getCatalogo().size(),
+                                            titolo,
+                                            prezzo,
+                                            new CasaEditrice(ce),
+                                            autori);
+                    autori.forEach(autore -> {
+                        autore.setLibro(libro);
+                    });
+
+                    catalogoLibri.aggiungiLibro(libro);
                     break;
                 case 3:
-                    System.out.println("");
+                    System.out.println("Nome Autore da ricercare: ");
+                    String nomeAutore = scanner.nextLine();
+                    System.out.println("Cognome Autore da ricercare: ");
+                    String cognomeAutore = scanner.nextLine();
+                    ArrayList<Libro> libriTrovati = catalogoLibri.ricerca(nomeAutore, cognomeAutore);
+                    libriTrovati.forEach(System.out::println);
                     break;
                 default:
                     System.out.println("Riprova.");
