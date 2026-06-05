@@ -142,7 +142,7 @@ public class Main {
                             .mapToDouble(Prodotto::getQty)
                             .sum();
 
-                    System.out.println("Quantità totale di preparati alla caffé: " + sumCoffee + "kg");
+                    System.out.println("Quantità totale di preparati al caffé: " + sumCoffee + "kg");
 
                     float sumCaf =
                             sumCoffee + (float) magazzino.getProdotti().stream()
@@ -150,7 +150,7 @@ public class Main {
                             .mapToDouble(Prodotto::getQty)
                             .sum();
 
-                    System.out.println("Quantità totale di preparati alla caffeina: " + sumCaf + "kg");
+                    System.out.println("Quantità totale di preparati contenenti caffeina: " + sumCaf + "kg");
                     //float total = (float) sumCaf + sumChoco;
                     float total = (float) magazzino.getProdotti().stream().mapToDouble(Prodotto::getQty).sum();
 

@@ -21,21 +21,17 @@ public class Magazzino {
         this.prodotti = prodotti;
     }
 
+
     public List<Prodotto> ricerca(String nome, String marca, TipoProdotto tipoProdotto) {
         List<Prodotto> prodottiTrovati = new ArrayList<>();
         this.prodotti.forEach(prodotto -> {
             if (nome.equals(prodotto.getNome())) {
                 if (marca.equals(prodotto.getMarca())) {
                     for (int i = 0; i < TipoProdotto.values().length; i++) {
-                        if (tipoProdotto.equals(TipoProdotto.values()[i])) {
-                            prodottiTrovati.add(new Prodotto(
-                                    prodotto.getNome(),
-                                    prodotto.getTipoProdotto(),
-                                    prodotto.getMarca(),
-                                    prodotto.getAnno(),
-                                    prodotto.getPrezzo(),
-                                    prodotto.getQty(),
-                                    prodotto.getQtyCaffeina()));
+                        if (tipoProdotto.equals(TipoProdotto.values()[i]) && tipoProdotto.equals(prodotto.getTipoProdotto())) {
+
+
+                            prodottiTrovati.add(prodotto);
                         }
                     }
                 }
