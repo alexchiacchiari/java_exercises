@@ -3,12 +3,10 @@ package com.it.unimol;
 import com.it.unimol.app.Magazzino;
 import com.it.unimol.app.Prodotto;
 import com.it.unimol.enumeration.TipoProdotto;
+import com.it.unimol.ui.UI;
 
 import java.net.Inet4Address;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /*
 * Seguire le indicazioni riportate in 'Istruzioni attività' e restituire i file .java, .class, .jar
@@ -64,104 +62,9 @@ Bonus Collection: 2 punti
 public class Main {
     public static void main(String[] args) {
         Magazzino magazzino = new Magazzino();
-        Scanner scanner = new Scanner(System.in);
+        UI ui = new UI();
         while(true) {
-            System.out.println("F1: Inserimento preparato.");
-            System.out.println("F2: Modifica preparato.");
-            System.out.println("F3: Stampa statistiche.");
-            Integer choice = Integer.parseInt(scanner.nextLine());
-            switch (choice) {
-                case 1:
-                    System.out.println("Inserici nome:");
-                    String nome = scanner.nextLine();
-
-                    System.out.println("Inserisci tipo: ");
-                    System.out.println("1. Caffé");
-                    System.out.println("2. Cioccolato");
-                    System.out.println("3. Té");
-                    TipoProdotto tipo = TipoProdotto.fromCode(Integer.parseInt(scanner.nextLine()));
-
-                    System.out.println("Inserisci Marca: ");
-                    String marca = scanner.nextLine();
-
-                    System.out.println("Insersci anno: ");
-                    Integer anno = Integer.parseInt(scanner.nextLine());
-
-                    System.out.println("Inserisci prezzo");
-                    Float prezzo = Float.parseFloat(scanner.nextLine());
-
-                    System.out.println("Inserisci quantità: ");
-                    Float qty = Float.parseFloat(scanner.nextLine());
-
-                    System.out.println("Inserisci quantità caffeina (0 se non presente): ");
-                    Integer qtyCaffeina = Integer.parseInt(scanner.nextLine());
-
-                    Prodotto prodotto = new Prodotto(nome, tipo, marca, anno, prezzo, qty, qtyCaffeina);
-                    magazzino.getProdotti().add(prodotto);
-                    break;
-                case 2:
-                    System.out.println("Inserici nome:");
-                    String nomeProdotto = scanner.nextLine();
-
-                    System.out.println("Inserisci tipo: ");
-                    System.out.println("1. Caffé");
-                    System.out.println("2. Cioccolato");
-                    System.out.println("3. Té");
-                    TipoProdotto tipoProdotto = TipoProdotto.fromCode(Integer.parseInt(scanner.nextLine()));
-
-                    System.out.println("Inserisci Marca: ");
-                    String marcaProdotto = scanner.nextLine();
-
-                    List<Prodotto> prodottiTrovati = magazzino.ricerca(nomeProdotto, marcaProdotto, tipoProdotto);
-
-                    if (prodottiTrovati.isEmpty()) {
-                        System.out.println("Nessun prodotto trovato");
-                        break;
-                    } else {
-                        //assunzione: no prodotti duplicati
-                        Prodotto prodottox = prodottiTrovati.get(0);
-                        System.out.println("Modifica la quantita: ");
-                        Float newQty = Float.parseFloat(scanner.nextLine());
-                        if (newQty.equals(prodottox.getQty()))
-                            System.out.println("Nulla da modificare.");
-                        else
-                            prodottox.setQty(newQty);
-                    }
-                    break;
-                case 3:
-                    System.out.println("Stampa statistiche");
-                    float sumChoco = (float) magazzino.getProdotti().stream()
-                                                .filter(x -> x.getTipoProdotto().equals(TipoProdotto.CIOCCOLATO))
-                                                .mapToDouble(Prodotto::getQty)
-                                                .sum();
-
-                    System.out.println("Quantità totale di preparati alla cioccolata: " + sumChoco + "kg");
-
-                    float sumCoffee = (float) magazzino.getProdotti().stream()
-                            .filter(x -> x.getTipoProdotto().equals(TipoProdotto.CAFFE))
-                            .mapToDouble(Prodotto::getQty)
-                            .sum();
-
-                    System.out.println("Quantità totale di preparati al caffé: " + sumCoffee + "kg");
-
-                    float sumCaf =
-                            sumCoffee + (float) magazzino.getProdotti().stream()
-                            .filter(x -> x.getTipoProdotto().equals(TipoProdotto.TE))
-                            .mapToDouble(Prodotto::getQty)
-                            .sum();
-
-                    System.out.println("Quantità totale di preparati contenenti caffeina: " + sumCaf + "kg");
-                    //float total = (float) sumCaf + sumChoco;
-                    float total = (float) magazzino.getProdotti().stream().mapToDouble(Prodotto::getQty).sum();
-
-                    System.out.println("Quantità totale di preparati: " + total + "kg");
-                    break;
-                default:
-                    System.out.println("Opzione non valida");
-                    break;
-            }
+            ui.loop(magazzino);
         }
-
-
     }
 }
