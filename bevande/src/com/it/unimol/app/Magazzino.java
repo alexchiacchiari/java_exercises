@@ -10,7 +10,7 @@ import java.util.List;
 public class Magazzino {
     private List<Prodotto> prodotti;
 
-    private HashMap<String, Double> statistiche;
+        private HashMap<String, Double> statistiche;
 
     public Magazzino() {
         this.prodotti = new ArrayList<>();
