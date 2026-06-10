@@ -80,6 +80,7 @@ import java.util.InputMismatchException;
 public class Main {
     public static void main(String[] args) {
         Deposito deposito = new Deposito();
+        deposito.carica();
         UI ui = new UI();
         ui.loop(deposito);
     }

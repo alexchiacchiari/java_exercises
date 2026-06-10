@@ -1,5 +1,7 @@
 package com.it.unimol.app;
 
+import java.io.Serializable;
+
 /**
  * La classe astratta {@code Treno} rappresenta il modello concettuale di base
  * per la gestione di un convoglio ferroviario all'interno del sistema del deposito.
@@ -13,7 +15,9 @@ package com.it.unimol.app;
  * @version 1.0
  */
 
-public class Treno {
+public class Treno implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String id;
     private String marca;
     private TipoTreno tipo;

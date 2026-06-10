@@ -2,6 +2,8 @@ package com.it.unimol.app;
 
 public class TrenoSerbatoio extends Treno {
 
+    private static final long serialVersionUID = 1L;
+
     private Integer capacitaSerbatorio;
 
     public TrenoSerbatoio(String id,

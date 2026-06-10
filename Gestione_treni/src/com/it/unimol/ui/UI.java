@@ -149,9 +149,11 @@ public class UI {
             switch (menuPrincipale()){
                 case 1:
                     creaTreno(deposito);
+                    deposito.salva();
                     break;
                 case 2:
                     modificaTreno(deposito);
+                    deposito.salva();
                     break;
                 case 3:
                     ricercaTreno(deposito);

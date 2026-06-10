@@ -1,10 +1,19 @@
 package com.it.unimol.app;
 
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Deposito {
+    private static final String FILE_SALVATAGGIO = "treni.bin";
+
     private List <Treno> deposito;
 
     public Deposito() {
@@ -116,4 +125,32 @@ public class Deposito {
         return deposito;
     }
 
+    /**
+     * Salva su file (treni.bin) lo stato corrente del deposito,
+     * serializzando la lista dei treni.
+     */
+    public void salva() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FILE_SALVATAGGIO))) {
+            out.writeObject(deposito);
+        } catch (IOException e) {
+            System.out.println("[ERRORE] Impossibile salvare lo stato del deposito: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Carica da file (treni.bin) lo stato del deposito salvato in precedenza.
+     * Se il file non esiste (prima esecuzione del programma) il deposito
+     * resta vuoto.
+     */
+    @SuppressWarnings("unchecked")
+    public void carica() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(FILE_SALVATAGGIO))) {
+            deposito = (List<Treno>) in.readObject();
+        } catch (FileNotFoundException | EOFException e) {
+            System.out.println("File non trovato.");
+            // Nessun salvataggio precedente: si parte con un deposito vuoto.
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("[ERRORE] Impossibile caricare lo stato del deposito: " + e.getMessage());
+        }
+    }
 }

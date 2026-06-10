@@ -2,10 +2,6 @@ package com.it.unimol.app;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
