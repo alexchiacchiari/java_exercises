@@ -1,13 +1,15 @@
+package com.it.unimol.app;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 public class Deposito {
-    List <Treno> deposito = new ArrayList<>();
+    private List <Treno> deposito;
 
-    private HashMap<String, Double> statistiche;
-
+    public Deposito() {
+        this.deposito = new ArrayList<>();
+    }
     public void aggiungiTreno(Treno treno){
         deposito.add(treno);
     }
@@ -23,6 +25,7 @@ public class Deposito {
     }
 
     public void modificaRevisione(Treno treno, boolean modifica, Integer nuovoAnno){
+
         if(modifica) {
             treno.setAnnoRevisione(nuovoAnno);
         }
@@ -59,15 +62,15 @@ public class Deposito {
                 "| Potenza: "+treno.getPotenza()+" Kw.");
 
         // 3. Andiamo a scoprire che tipo di treno è per stampare i dati specifici
-       /* if (treno instanceof Frecciarossa) {
-            // Facciamo il CAST a Frecciarossa per sbloccare il metodo getCapacita()
-            Frecciarossa freccia = (Frecciarossa) treno;
+       /* if (treno instanceof Treno) {
+            // Facciamo il CAST a Treno per sbloccare il metodo getCapacita()
+            Treno freccia = (Treno) treno;
             System.out.println(" | Posti: " + freccia.getCapacita() + " | Potenza: " + freccia.getPotenza() + " Kw");
         }*/
-         if (treno instanceof Regionale) {
-            // Se anche il Regionale ha la capacità, facciamo il cast a Regionale
-            Regionale regionale = (Regionale) treno;
-            System.out.println(" | Posti: " + regionale.getCapacita() + " | Potenza: " + regionale.getPotenza() + " Kw");
+         if (treno instanceof TrenoSerbatoio) {
+            // Se anche il TrenoSerbatoio ha la capacità, facciamo il cast a TrenoSerbatoio
+            TrenoSerbatoio TrenoSerbatoio = (TrenoSerbatoio) treno;
+            System.out.println(" | Posti: " + TrenoSerbatoio.getCapacita() + " | Potenza: " + TrenoSerbatoio.getPotenza() + " Kw");
         }
         else {
             // Caso generico se per caso non fosse nessuno dei due, per evitare di lasciare la riga a metà
@@ -77,10 +80,9 @@ public class Deposito {
 
     public Integer calcolaNumPostiFreccia(){
         Integer numPosti = 0;
-        for(Treno treno: this.deposito ){
-            if( treno instanceof Frecciarossa){
+        for(Treno treno: this.deposito) {
+            if (treno.getTipo().code == 1)
                 numPosti+= treno.getCapacita();
-            }
         }
         return numPosti;
     }
@@ -88,7 +90,7 @@ public class Deposito {
     public Integer calcolaCapacitaCarrozze(){
         Integer numCarrozze = 0;
         for(Treno x: this.deposito){
-            if(x instanceof Intercity){
+            if(x.getTipo().code == 2){
                 numCarrozze += x.getNumCarrozze();
             }
         }
@@ -98,12 +100,9 @@ public class Deposito {
     public Integer CalcolaTotaleSerbatoio(){
         Integer totCapacitaSerbatoio = 0;
         for (Treno treno : this.deposito){
-            if(treno instanceof Intercity){
-                Intercity intercity = (Intercity)treno;
-                totCapacitaSerbatoio += intercity.getCapacitaSerbatorio();
-            }else  if (treno instanceof Regionale){
-                //Regionale regionale= (Regionale) treno;
-                totCapacitaSerbatoio += ((Regionale) treno).getCapacitaSerbatoio();
+            if(treno instanceof TrenoSerbatoio){
+                TrenoSerbatoio TrenoSerbatoio = (TrenoSerbatoio)treno;
+                totCapacitaSerbatoio += TrenoSerbatoio.getCapacitaSerbatorio();
             }
         }
         return totCapacitaSerbatoio;
@@ -112,4 +111,9 @@ public class Deposito {
     public Integer calcolaTotTreni(){
         return deposito.size();
     }
+
+    public List<Treno> getDeposito() {
+        return deposito;
+    }
+
 }

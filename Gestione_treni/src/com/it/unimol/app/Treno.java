@@ -1,3 +1,5 @@
+package com.it.unimol.app;
+
 /**
  * La classe astratta {@code Treno} rappresenta il modello concettuale di base
  * per la gestione di un convoglio ferroviario all'interno del sistema del deposito.
@@ -11,9 +13,10 @@
  * @version 1.0
  */
 
-public abstract class Treno {
+public class Treno {
     private String id;
     private String marca;
+    private TipoTreno tipo;
     private String modello;
     private Integer annoProduzione;
     private Integer annoRevisione;
@@ -21,6 +24,35 @@ public abstract class Treno {
     private Integer capacita;
     private Integer potenza;
 
+
+    public Treno(String id, String marca, TipoTreno tipo, String modello, Integer annoProduzione, Integer numCarrozze,
+                 Integer annoRevisione, Integer capacita, Integer potenza) {
+
+        this.id = id;
+        this.marca = marca;
+        this.tipo = tipo;
+        this.modello = modello;
+        this.annoProduzione = annoProduzione;
+        this.numCarrozze = numCarrozze;
+        this.annoRevisione = annoRevisione;
+        this.capacita = capacita;
+        this.potenza = potenza;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id + " | Marca: " + marca + " | Modello: " + modello +
+                " | Posti: " + capacita + " | Potenza: " + potenza + "kW";
+    }
+
+
+    public TipoTreno getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoTreno tipo) {
+        this.tipo = tipo;
+    }
     public String getId() {
         return id;
     }
@@ -85,24 +117,6 @@ public abstract class Treno {
         this.potenza = potenza;
     }
 
-    public Treno(String id, String marca, String modello, Integer annoProduzione, Integer numCarrozze,
-                 Integer annoRevisione, Integer capacita, Integer potenza) {
-
-        this.id = id;
-        this.marca = marca;
-        this.modello = modello;
-        this.annoProduzione = annoProduzione;
-        this.numCarrozze = numCarrozze;
-        this.annoRevisione = annoRevisione;
-        this.capacita = capacita;
-        this.potenza = potenza;
-    }
-
-    @Override
-    public String toString() {
-        return "ID: " + id + " | Marca: " + marca + " | Modello: " + modello +
-                " | Posti: " + capacita + " | Potenza: " + potenza + "kW";
-    }
 
 
 }
